@@ -25,26 +25,26 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self showMessage];
+   
+    Controller *cont = [[Controller alloc] init];
+    [cont loadData];
+    
 }
 
 -(void)showAlertWithMessage: (AlertInfo*)alert{
     /*UIAlertView *helloWorldAlert = [[UIAlertView alloc] initWithTitle:alert.titulo message:alert.m delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];*/
     NSString *filePath = [[NSBundle mainBundle] pathForResource:@"notes" ofType:@"json"];
-   
     NSData *JSONData = [NSData dataWithContentsOfFile:filePath];
-    NSString *text = [[NSString alloc] initWithData:JSONData encoding:NSUTF8StringEncoding];
     
     NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:JSONData options:kNilOptions error:nil];
     
-    NSDictionary *notes = [dictionary objectForKey:@"notes"];
-    NSLog([NSString stringWithFormat:@"%ld",[notes count]]);
+    NSArray *notes = dictionary [@"notes"];
+    
     
     for (NSDictionary *note in notes){
-        NSString *id = [note objectForKey:@"id"];
-        NSLog(@"id: @%",id);
+        NSString *title = [note objectForKey:@"title"];
+        NSLog(@"title: %@",title);
     }
-    
     NSLog(@"fin");
     
     
@@ -57,8 +57,12 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    static NSString *cellID = @"cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"identifier"];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault  reuseIdentifier:@"identifier"];
+    }
+    
+    cell.textLabel.text = [NSString stringWithFormat:@"algo %d",indexPath.row];
     return cell;
 }
 
