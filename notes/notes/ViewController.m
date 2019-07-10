@@ -9,50 +9,25 @@
 #import "ViewController.h"
 #import "AlertInfo.h"
 
-@interface ViewController () <UITableViewDataSource>
+@interface ViewController ()
 
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 
 @end
 
 @implementation ViewController
-
--(IBAction)showMessage{
-     AlertInfo *alert = [[AlertInfo alloc] initWithTitle: @"titulo" message:@"hola mundo"];
-    [self showAlertWithMessage:alert];
-}
+NSArray *data;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-   
     Controller *cont = [[Controller alloc] init];
     [cont loadData];
+    data = [cont getData];
     
-}
-
--(void)showAlertWithMessage: (AlertInfo*)alert{
-    /*UIAlertView *helloWorldAlert = [[UIAlertView alloc] initWithTitle:alert.titulo message:alert.m delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];*/
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"notes" ofType:@"json"];
-    NSData *JSONData = [NSData dataWithContentsOfFile:filePath];
-    
-    NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:JSONData options:kNilOptions error:nil];
-    
-    NSArray *notes = dictionary [@"notes"];
-    
-    
-    for (NSDictionary *note in notes){
-        NSString *title = [note objectForKey:@"title"];
-        NSLog(@"title: %@",title);
-    }
-    NSLog(@"fin");
-    
-    
-
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 5;
+    return [data count];
 }
 
 
@@ -61,8 +36,7 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault  reuseIdentifier:@"identifier"];
     }
-    
-    cell.textLabel.text = [NSString stringWithFormat:@"algo %d",indexPath.row];
+    cell.textLabel.text = data[indexPath.row];
     return cell;
 }
 

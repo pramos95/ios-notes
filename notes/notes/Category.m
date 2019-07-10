@@ -10,9 +10,9 @@
 
 @implementation Category
 
--(Category*) initWithId:(NSNumber*)Id title:(NSString*)title createdDate:(NSDate*)createdDate {
+- (Category*)initWithId:(NSNumber*)categoryId title:(NSString*)title createdDate:(NSDate*)createdDate {
     self = [super init];
-    self.Id = Id;
+    self.categoryId = categoryId;
     self.title = title;
     self.createdDate = createdDate;
     

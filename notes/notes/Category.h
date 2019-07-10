@@ -12,9 +12,9 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface Category : NSObject
--(Category*) initWithId:(NSNumber*)Id title:(NSString*)title createdDate:(NSDate*)createdDate;
+- (Category*)initWithId:(NSNumber*)categoryId title:(NSString*)title createdDate:(NSDate*)createdDate;
 
-@property NSNumber *Id;
+@property NSNumber *categoryId;
 @property NSString *title;
 @property NSDate *createdDate;
 

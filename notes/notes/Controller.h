@@ -14,11 +14,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface Controller : NSObject
 
-@property NSMutableArray<Note*> *notes;
-@property NSMutableArray<Category*> *categories;
+@property NSMutableArray *notesArray;
+@property NSMutableArray *categoriesArray;
 
 - (Controller*)init;
 - (void)loadData;
+- (NSArray*)getData;
 
 @end
 
