@@ -19,7 +19,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (Controller*)init;
 - (void)loadData;
-- (NSArray*)getData;
+- (NSArray*)getNotes;
+- (NSArray*)getCategories;
 
 @end
 

@@ -12,32 +12,60 @@
 @interface ViewController ()
 
 
-
 @end
 
 @implementation ViewController
-NSArray *data;
+NSArray *notes;
+NSArray *categories;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     Controller *cont = [[Controller alloc] init];
     [cont loadData];
-    data = [cont getData];
-    
+    notes = [cont getNotes];
+    categories = [cont getCategories];
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return [data count];
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return [categories count];
 }
 
+- (nullable NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    Category *category = categories[section];
+    return category.title;
+}
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    NSInteger counter = 0;
+    Category *category = categories[section];
+    for (Note *note in notes) {
+        if ([note.categoryId isEqualToNumber:category.categoryId]) {
+            counter ++;
+        }
+    }
+    return counter;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"identifier"];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault  reuseIdentifier:@"identifier"];
     }
-    cell.textLabel.text = data[indexPath.row];
+    Category *category = categories[indexPath.section];
+    Note *note = [self getNotes:notes ofCategory:category][indexPath.row];
+    cell.textLabel.text = note.title;
     return cell;
 }
+
+- (NSArray*)getNotes:(NSArray*)notes ofCategory:(Category*)category {
+    NSMutableArray *res = [NSMutableArray new];
+    for (Note *note in notes) {
+        if ([note.categoryId isEqualToNumber:category.categoryId]) {
+            [res addObject:note];
+        }
+    }
+    return res;
+}
+
 
 @end

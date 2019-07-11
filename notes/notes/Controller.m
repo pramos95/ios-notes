@@ -38,24 +38,12 @@
     }
 }
 
-- (NSArray*)getData{
-    NSMutableArray *res = [NSMutableArray new];
-    for (Note *note in self.notesArray){
-        [res addObject:note.noteId];
-        [res addObject:note.title];
-        [res addObject:note.content];
-        [res addObject:[note.contentDate description]];
-        Category *category;
-        for (Category *cat in self.categoriesArray) {
-            if ([cat.categoryId isEqualToNumber:note.categoryId]) {
-                category = cat;
-                break;
-            }
-        }
-        [res addObject:category.title];
-        [res addObject:[category.createdDate description]];
-    }
-    return res;
+- (NSArray*)getNotes {
+    return self.notesArray;
+}
+
+- (NSArray*)getCategories {
+    return self.categoriesArray;
 }
 
 @end
