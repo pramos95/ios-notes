@@ -7,65 +7,67 @@
 //
 
 #import "ViewController.h"
-#import "AlertInfo.h"
+#import "CustomCell.h"
 
-@interface ViewController ()
-
-
+@interface ViewController () {
+    
+}
 @end
 
 @implementation ViewController
-NSArray *notes;
-NSArray *categories;
+NSArray<Note*> *notes;
+NSArray<Category*> *categories;
+NSMutableArray<NSNumber*> *numberOfRowsForSection;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    Controller *cont = [[Controller alloc] init];
+    ModelController *cont = [ModelController getInstance];
     [cont loadData];
     notes = [cont getNotes];
     categories = [cont getCategories];
+    numberOfRowsForSection = [NSMutableArray new];
+    for (int section = 0; section < categories.count; section++) {
+        NSInteger counter = 0;
+        Category *category = categories[section];
+        for (Note *note in notes) {
+            if ([note.categoryId isEqualToNumber:category.categoryId]) {
+                counter ++;
+            }
+        }
+        [numberOfRowsForSection addObject:[NSNumber numberWithLong:counter]];
+    }
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return [categories count];
+    return categories.count;
 }
 
 - (nullable NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    Category *category = categories[section];
-    return category.title;
+    return categories[section].title;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSInteger counter = 0;
-    Category *category = categories[section];
-    for (Note *note in notes) {
-        if ([note.categoryId isEqualToNumber:category.categoryId]) {
-            counter ++;
-        }
-    }
-    return counter;
+    return numberOfRowsForSection[section].longLongValue;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"identifier"];
+    CustomCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CustomCell"];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault  reuseIdentifier:@"identifier"];
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"CustomCell" owner:self options:nil];
+        cell = [nib objectAtIndex:0];
     }
     Category *category = categories[indexPath.section];
-    Note *note = [self getNotes:notes ofCategory:category][indexPath.row];
-    cell.textLabel.text = note.title;
+    Note *note = [ModelController getNotes:notes ofCategory:category][indexPath.row];
+    cell.title.text = note.title;
+    NSDateFormatter *dateFormatter = [NSDateFormatter new];
+    dateFormatter.dateFormat = @"EEEE, MMM d, yyyy";
+    cell.date.text = [dateFormatter stringFromDate:note.contentDate];
+    cell.content.text = note.content;
     return cell;
 }
 
-- (NSArray*)getNotes:(NSArray*)notes ofCategory:(Category*)category {
-    NSMutableArray *res = [NSMutableArray new];
-    for (Note *note in notes) {
-        if ([note.categoryId isEqualToNumber:category.categoryId]) {
-            [res addObject:note];
-        }
-    }
-    return res;
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 150;
 }
-
 
 @end

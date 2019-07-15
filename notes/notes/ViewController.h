@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Controller.h"
+#import "ModelController.h"
 #import "Note.h"
 #import "Category.h"
 

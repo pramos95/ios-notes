@@ -1,38 +1,45 @@
 //
-//  Controller.m
+//  ModelController.m
 //  notes
 //
 //  Created by Pedro Ramos on 7/9/19.
 //  Copyright © 2019 Pedro Ramos. All rights reserved.
 //
 
-#import "Controller.h"
+#import "ModelController.h"
 
-@implementation Controller
+@implementation ModelController
+static ModelController *_instance;
++ (ModelController*) getInstance {
+    if (_instance == nil) {
+        _instance = [ModelController new];
+    }
+    return _instance;
+}
 
-- (Controller*)init {
+- (ModelController*)init {
     self = [super init];
     self.notesArray = [NSMutableArray array];
     self.categoriesArray = [NSMutableArray array];
     return self;
 }
-
+NSData *JSONData;
 - (void)loadData {
-    NSData *JSONData = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"notes" ofType:@"json"]];
+    NSData *JSONData = [NSData dataWithContentsOfURL:[[NSURL alloc] initWithString:@"https://s3.amazonaws.com/kezmo.assets/sandbox/notes.json"]];
     NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:JSONData options:kNilOptions error:nil];
-    
+
     NSArray *notes = dictionary[@"notes"];
     NSArray *categories = dictionary[@"categories"];
     
     for (NSDictionary *note in notes){
         NSDate *date = [[NSDate alloc] initWithTimeIntervalSince1970:[note[@"createdDate"] doubleValue]];
-        Note *object = [[Note alloc] initWithId:note[@"id"] title:note[@"title"] content:note[@"content"] contentDate:date categoryId:[NSNumber numberWithInt:[note[@"categoryId"] integerValue]]];
+        Note *object = [[Note alloc] initWithId:note[@"id"] title:note[@"title"] content:note[@"content"] contentDate:date categoryId:[NSNumber numberWithInt:[note[@"categoryId"] intValue]]];
         [self.notesArray addObject:object];
     }
 
     for (NSDictionary *category in categories) {
         NSDate *date = [[NSDate alloc] initWithTimeIntervalSince1970:[category[@"createdDate"] doubleValue]];
-        NSNumber *categoryId = [NSNumber numberWithInt:[category[@"id"] integerValue]];
+        NSNumber *categoryId = [NSNumber numberWithInt:[category[@"id"] intValue]];
         Category *object = [[Category alloc] initWithId:categoryId title:category[@"title"] createdDate:date];
         [self.categoriesArray addObject:object];
     }
@@ -44,6 +51,16 @@
 
 - (NSArray*)getCategories {
     return self.categoriesArray;
+}
+
++ (NSArray*)getNotes:(NSArray*)notes ofCategory:(Category*)category {
+    NSMutableArray *res = [NSMutableArray new];
+    for (Note *note in notes) {
+        if ([note.categoryId isEqualToNumber:category.categoryId]) {
+            [res addObject:note];
+        }
+    }
+    return res;
 }
 
 @end
