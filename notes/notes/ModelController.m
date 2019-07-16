@@ -10,14 +10,14 @@
 
 @implementation ModelController
 static ModelController *_instance;
-+ (ModelController*) getInstance {
++ (ModelController *) getInstance {
     if (_instance == nil) {
         _instance = [ModelController new];
     }
     return _instance;
 }
 
-- (ModelController*)init {
+- (ModelController *)init {
     self = [super init];
     self.notesArray = [NSMutableArray array];
     self.categoriesArray = [NSMutableArray array];
@@ -45,15 +45,15 @@ NSData *JSONData;
     }
 }
 
-- (NSArray*)getNotes {
+- (NSArray *)getNotes {
     return self.notesArray;
 }
 
-- (NSArray*)getCategories {
+- (NSArray *)getCategories {
     return self.categoriesArray;
 }
 
-+ (NSArray*)getNotes:(NSArray*)notes ofCategory:(Category*)category {
++ (NSArray *)getNotes:(NSArray *)notes ofCategory:(Category *)category {
     NSMutableArray *res = [NSMutableArray new];
     for (Note *note in notes) {
         if ([note.categoryId isEqualToNumber:category.categoryId]) {

@@ -11,13 +11,13 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface Note : NSObject
-- (Note*)initWithId:(NSString*)noteId title:(NSString*)title content:(NSString*)content contentDate:(NSDate*)contentDate categoryId:(NSNumber*)categoryId;
+- (Note *)initWithId:(NSString *)noteId title:(NSString *)title content:(NSString *)content contentDate:(NSDate *)contentDate categoryId:(NSNumber *)categoryId;
 
-@property NSString *noteId;
-@property NSString *title;
-@property NSString *content;
-@property NSDate *contentDate;
-@property NSNumber *categoryId;
+@property (strong, nonatomic) NSString *noteId;
+@property (strong, nonatomic) NSString *title;
+@property (strong, nonatomic) NSString *content;
+@property (strong, nonatomic) NSDate *contentDate;
+@property (strong, nonatomic) NSNumber *categoryId;
 
 @end
 

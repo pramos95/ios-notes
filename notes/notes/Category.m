@@ -10,7 +10,7 @@
 
 @implementation Category
 
-- (Category*)initWithId:(NSNumber*)categoryId title:(NSString*)title createdDate:(NSDate*)createdDate {
+- (Category *)initWithId:(NSNumber *)categoryId title:(NSString *)title createdDate:(NSDate *)createdDate {
     self = [super init];
     self.categoryId = categoryId;
     self.title = title;
