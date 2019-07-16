@@ -19,10 +19,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (ModelController *)getInstance;
 - (ModelController *)init;
-- (void)loadData;
+- (void)loadData:(void (^)(void))completionHandler;
 - (NSArray *)getNotes;
 - (NSArray *)getCategories;
 + (NSArray *)getNotes:(NSArray *)notes ofCategory:(Category *)category;
+
 @end
 
 NS_ASSUME_NONNULL_END

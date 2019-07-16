@@ -23,9 +23,24 @@ static ModelController *_instance;
     self.categoriesArray = [NSMutableArray array];
     return self;
 }
-NSData *JSONData;
-- (void)loadData {
-    NSData *JSONData = [NSData dataWithContentsOfURL:[[NSURL alloc] initWithString:@"https://s3.amazonaws.com/kezmo.assets/sandbox/notes.json"]];
+/*
+ completionHandler:(void (^)(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error))completionHandler
+ */
+
+
+
+- (void)loadData:(void (^)(void))completionHandler {
+    
+    __block NSData *JSONData;
+    __block bool listo = false;
+    NSURLSessionDownloadTask *downloadTask = [[NSURLSession sharedSession] downloadTaskWithURL:[NSURL URLWithString:@"https://s3.amazonaws.com/kezmo.assets/sandbox/notes.json"] completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        JSONData = [NSData dataWithContentsOfFile:location];
+        listo = true;
+    }];
+    [downloadTask resume];
+    
+    while (!listo);
+
     NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:JSONData options:kNilOptions error:nil];
 
     NSArray *notes = dictionary[@"notes"];
@@ -43,6 +58,8 @@ NSData *JSONData;
         Category *object = [[Category alloc] initWithId:categoryId title:category[@"title"] createdDate:date];
         [self.categoriesArray addObject:object];
     }
+    
+    completionHandler ();
 }
 
 - (NSArray *)getNotes {

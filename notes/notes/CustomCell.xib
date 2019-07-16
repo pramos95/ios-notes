@@ -48,7 +48,7 @@
                 <outlet property="date" destination="Z5Z-Fv-Dar" id="y7p-MR-unk"/>
                 <outlet property="title" destination="9Gt-Ws-PHO" id="ulL-k7-IsN"/>
             </connections>
-            <point key="canvasLocation" x="137.68115942028987" y="155.35714285714286"/>
+            <point key="canvasLocation" x="106" y="135"/>
         </tableViewCell>
     </objects>
 </document>

@@ -10,6 +10,7 @@
 #import "CustomCell.h"
 
 @interface ViewController ()
+
 @property (weak, nonatomic) NSArray<Note *> *notes;
 @property (weak, nonatomic) NSArray<Category *> *categories;
 @property (strong, nonatomic) NSMutableArray<NSNumber *> *numberOfRowsForSection;
@@ -21,20 +22,22 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     ModelController *cont = [ModelController getInstance];
-    [cont loadData];
-    self.notes = [cont getNotes];
-    self.categories = [cont getCategories];
-    self.numberOfRowsForSection = [NSMutableArray new];
-    for (int section = 0; section < self.categories.count; section++) {
-        NSInteger counter = 0;
-        Category *category = self.categories[section];
-        for (Note *note in self.notes) {
-            if ([note.categoryId isEqualToNumber:category.categoryId]) {
-                counter ++;
+    [cont loadData:^{
+        self.notes = [cont getNotes];
+        self.categories = [cont getCategories];
+        self.numberOfRowsForSection = [NSMutableArray new];
+        for (int section = 0; section < self.categories.count; section++) {
+            NSInteger counter = 0;
+            Category *category = self.categories[section];
+            for (Note *note in self.notes) {
+                if ([note.categoryId isEqualToNumber:category.categoryId]) {
+                    counter ++;
+                }
             }
+            [self.numberOfRowsForSection addObject:[NSNumber numberWithLong:counter]];
         }
-        [self.numberOfRowsForSection addObject:[NSNumber numberWithLong:counter]];
-    }
+    }];
+   
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
