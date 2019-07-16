@@ -9,45 +9,44 @@
 #import "ViewController.h"
 #import "CustomCell.h"
 
-@interface ViewController () {
-    
-}
+@interface ViewController ()
+@property (weak, nonatomic) NSArray<Note *> *notes;
+@property (weak, nonatomic) NSArray<Category *> *categories;
+@property (strong, nonatomic) NSMutableArray<NSNumber *> *numberOfRowsForSection;
+
 @end
 
 @implementation ViewController
-NSArray<Note*> *notes;
-NSArray<Category*> *categories;
-NSMutableArray<NSNumber*> *numberOfRowsForSection;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     ModelController *cont = [ModelController getInstance];
     [cont loadData];
-    notes = [cont getNotes];
-    categories = [cont getCategories];
-    numberOfRowsForSection = [NSMutableArray new];
-    for (int section = 0; section < categories.count; section++) {
+    self.notes = [cont getNotes];
+    self.categories = [cont getCategories];
+    self.numberOfRowsForSection = [NSMutableArray new];
+    for (int section = 0; section < self.categories.count; section++) {
         NSInteger counter = 0;
-        Category *category = categories[section];
-        for (Note *note in notes) {
+        Category *category = self.categories[section];
+        for (Note *note in self.notes) {
             if ([note.categoryId isEqualToNumber:category.categoryId]) {
                 counter ++;
             }
         }
-        [numberOfRowsForSection addObject:[NSNumber numberWithLong:counter]];
+        [self.numberOfRowsForSection addObject:[NSNumber numberWithLong:counter]];
     }
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return categories.count;
+    return self.categories.count;
 }
 
 - (nullable NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return categories[section].title;
+    return self.categories[section].title;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return numberOfRowsForSection[section].longLongValue;
+    return self.numberOfRowsForSection[section].longLongValue;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -56,8 +55,8 @@ NSMutableArray<NSNumber*> *numberOfRowsForSection;
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"CustomCell" owner:self options:nil];
         cell = [nib objectAtIndex:0];
     }
-    Category *category = categories[indexPath.section];
-    Note *note = [ModelController getNotes:notes ofCategory:category][indexPath.row];
+    Category *category = self.categories[indexPath.section];
+    Note *note = [ModelController getNotes:self.notes ofCategory:category][indexPath.row];
     cell.title.text = note.title;
     NSDateFormatter *dateFormatter = [NSDateFormatter new];
     dateFormatter.dateFormat = @"EEEE, MMM d, yyyy";

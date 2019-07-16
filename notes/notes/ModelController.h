@@ -17,12 +17,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property NSMutableArray *notesArray;
 @property NSMutableArray *categoriesArray;
 
-+ (ModelController*) getInstance;
-- (ModelController*)init;
++ (ModelController *)getInstance;
+- (ModelController *)init;
 - (void)loadData;
-- (NSArray*)getNotes;
-- (NSArray*)getCategories;
-+ (NSArray*)getNotes:(NSArray*)notes ofCategory:(Category*)category;
+- (NSArray *)getNotes;
+- (NSArray *)getCategories;
++ (NSArray *)getNotes:(NSArray *)notes ofCategory:(Category *)category;
 @end
 
 NS_ASSUME_NONNULL_END

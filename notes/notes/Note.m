@@ -9,7 +9,7 @@
 #import "Note.h"
 
 @implementation Note
-- (Note*)initWithId:(NSString*)noteId title:(NSString*)title content:(NSString*)content contentDate:(NSDate*)contentDate categoryId:(NSNumber*)categoryId {
+- (Note *)initWithId:(NSString *)noteId title:(NSString *)title content:(NSString *)content contentDate:(NSDate *)contentDate categoryId:(NSNumber *)categoryId {
     self = [super init];
     self.noteId = noteId;
     self.title = title;
