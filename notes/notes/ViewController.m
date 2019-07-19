@@ -10,8 +10,9 @@
 #import "CustomCell.h"
 
 @interface ViewController ()
-@property (weak, nonatomic) NSArray<Note *> *notes;
-@property (weak, nonatomic) NSArray<Category *> *categories;
+
+@property (strong, nonatomic) NSArray<Note *> *notes;
+@property (strong, nonatomic) NSArray<Category *> *categories;
 @property (strong, nonatomic) NSMutableArray<NSNumber *> *numberOfRowsForSection;
 
 @end
@@ -21,7 +22,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     ModelController *cont = [ModelController getInstance];
-    [cont loadData];
+    [cont loadData:^(NSError * _Nullable error){
+        if (!error) {
+            [self refeshTableView:cont];
+        } else {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Download error" message:error.localizedDescription delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
+        }
+    }];
+}
+
+- (void)refeshTableView:(ModelController *)cont {
     self.notes = [cont getNotes];
     self.categories = [cont getCategories];
     self.numberOfRowsForSection = [NSMutableArray new];
@@ -35,6 +46,7 @@
         }
         [self.numberOfRowsForSection addObject:[NSNumber numberWithLong:counter]];
     }
+    [self.tableView reloadData];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {

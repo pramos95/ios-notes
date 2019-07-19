@@ -23,11 +23,22 @@ static ModelController *_instance;
     self.categoriesArray = [NSMutableArray array];
     return self;
 }
-NSData *JSONData;
-- (void)loadData {
-    NSData *JSONData = [NSData dataWithContentsOfURL:[[NSURL alloc] initWithString:@"https://s3.amazonaws.com/kezmo.assets/sandbox/notes.json"]];
-    NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:JSONData options:kNilOptions error:nil];
 
+- (void)loadData:(void (^)(NSError * _Nullable error))completionHandler {
+    NSURLSessionDownloadTask *downloadTask = [[NSURLSession sharedSession] downloadTaskWithURL:[NSURL URLWithString:@"https://s3.amazonaws.com/kezmo.assets/sandbox/notes.json"] completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        if (!error && location) {
+            NSData *JSONData = [NSData dataWithContentsOfURL:location];
+            [self parseJSON:JSONData];
+        }
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            completionHandler (error);
+        });
+    }];
+    [downloadTask resume];
+}
+
+-(void)parseJSON:(NSData *)JSONData {
+    NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:JSONData options:kNilOptions error:nil];
     NSArray *notes = dictionary[@"notes"];
     NSArray *categories = dictionary[@"categories"];
     
@@ -36,7 +47,7 @@ NSData *JSONData;
         Note *object = [[Note alloc] initWithId:note[@"id"] title:note[@"title"] content:note[@"content"] contentDate:date categoryId:[NSNumber numberWithInt:[note[@"categoryId"] intValue]]];
         [self.notesArray addObject:object];
     }
-
+    
     for (NSDictionary *category in categories) {
         NSDate *date = [[NSDate alloc] initWithTimeIntervalSince1970:[category[@"createdDate"] doubleValue]];
         NSNumber *categoryId = [NSNumber numberWithInt:[category[@"id"] intValue]];
