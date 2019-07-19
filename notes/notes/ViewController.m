@@ -11,8 +11,8 @@
 
 @interface ViewController ()
 
-@property (weak, nonatomic) NSArray<Note *> *notes;
-@property (weak, nonatomic) NSArray<Category *> *categories;
+@property (strong, nonatomic) NSArray<Note *> *notes;
+@property (strong, nonatomic) NSArray<Category *> *categories;
 @property (strong, nonatomic) NSMutableArray<NSNumber *> *numberOfRowsForSection;
 
 @end
@@ -26,10 +26,9 @@
         if (!error) {
             [self refeshTableView:cont];
         } else {
-            NSLog(@"%@", error.localizedDescription);
-            //TODO:dif displey alert
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Download error" message:error.localizedDescription delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
         }
-        
     }];
 }
 

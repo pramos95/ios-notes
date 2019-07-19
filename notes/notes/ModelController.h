@@ -14,15 +14,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ModelController : NSObject
 
-@property NSMutableArray<Note *> *notesArray;
-@property NSMutableArray<Category *> *categoriesArray;
+@property (strong, nonatomic) NSMutableArray<Note *> *notesArray;
+@property (strong, nonatomic) NSMutableArray<Category *> *categoriesArray;
 
-+ (ModelController*)getInstance;
-- (ModelController*)init;
++ (ModelController *)getInstance;
+- (ModelController *)init;
 - (void)loadData:(void (^)(NSError * _Nullable error))completionHandler;
-- (NSArray*)getNotes;
-- (NSArray*)getCategories;
-+ (NSArray*)getNotes:(NSArray*)notes ofCategory:(Category*)category;
+- (NSArray *)getNotes;
+- (NSArray *)getCategories;
++ (NSArray *)getNotes:(NSArray *)notes ofCategory:(Category *)category;
 
 @end
 
