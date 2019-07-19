@@ -22,22 +22,32 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     ModelController *cont = [ModelController getInstance];
-    [cont loadData:^{
-        self.notes = [cont getNotes];
-        self.categories = [cont getCategories];
-        self.numberOfRowsForSection = [NSMutableArray new];
-        for (int section = 0; section < self.categories.count; section++) {
-            NSInteger counter = 0;
-            Category *category = self.categories[section];
-            for (Note *note in self.notes) {
-                if ([note.categoryId isEqualToNumber:category.categoryId]) {
-                    counter ++;
-                }
-            }
-            [self.numberOfRowsForSection addObject:[NSNumber numberWithLong:counter]];
+    [cont loadData:^(NSError * _Nullable error){
+        if (!error) {
+            [self refeshTableView:cont];
+        } else {
+            NSLog(@"%@", error.localizedDescription);
+            //TODO:dif displey alert
         }
+        
     }];
-   
+}
+
+- (void)refeshTableView:(ModelController *)cont {
+    self.notes = [cont getNotes];
+    self.categories = [cont getCategories];
+    self.numberOfRowsForSection = [NSMutableArray new];
+    for (int section = 0; section < self.categories.count; section++) {
+        NSInteger counter = 0;
+        Category *category = self.categories[section];
+        for (Note *note in self.notes) {
+            if ([note.categoryId isEqualToNumber:category.categoryId]) {
+                counter ++;
+            }
+        }
+        [self.numberOfRowsForSection addObject:[NSNumber numberWithLong:counter]];
+    }
+    [self.tableView reloadData];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
