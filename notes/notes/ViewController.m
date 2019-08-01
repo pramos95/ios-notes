@@ -22,6 +22,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     ModelController *cont = [ModelController getInstance];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(reciveRefeshNotification:) name:nil object:cont];
     [cont loadData:^(NSError * _Nullable error){
         if (!error) {
             [self refeshTableView:cont];
@@ -29,6 +30,11 @@
             [self showError:error];
         }
     }];
+}
+
+- (void)reciveRefeshNotification:(NSNotification *)notification {
+    ModelController *cont = [ModelController getInstance];
+    [self refeshTableView:cont];
 }
 
 - (void)refeshTableView:(ModelController *)cont {
@@ -67,10 +73,8 @@
         cell = [nib objectAtIndex:0];
     }
     NoteCategory *category = self.categories[indexPath.section];
-    Note *note = [ModelController Notes:self.notes ofCategory:category][indexPath.row];
+    Note *note = [ModelController notes:self.notes ofCategory:category][indexPath.row];
     cell.title.text = note.title;
-    NSDateFormatter *dateFormatter = [NSDateFormatter new];
-    dateFormatter.dateFormat = @"EEEE, MMM d, yyyy";
     cell.date.text = [HelperClass formatDateWithDate: note.contentDate];
     cell.content.text = note.content;
     return cell;
@@ -78,9 +82,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     DetailViewController *detailView = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailView"];
-    detailView.note = [ModelController Notes:self.notes ofCategory:self.categories[indexPath.section]][indexPath.row];
+    detailView.note = [ModelController notes:self.notes ofCategory:self.categories[indexPath.section]][indexPath.row];
     detailView.category = self.categories[indexPath.section];
-
     [self.navigationController pushViewController:detailView animated:YES];
 }
 
@@ -91,8 +94,24 @@
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
+- (nullable UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath{
+    UIContextualAction *action = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:@"Edit" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+        AddEditNoteViewController *editView = [self.storyboard instantiateViewControllerWithIdentifier:@"AddEditNoteViewController"];
+        NoteCategory *category = self.categories[indexPath.section];
+        editView.note = [ModelController notes:self.notes ofCategory:category][indexPath.row];
+        [self.navigationController pushViewController:editView animated:YES];
+    }];
+    NSMutableArray *actions = [NSMutableArray new];
+    [actions addObject:action];
+    return [UISwipeActionsConfiguration configurationWithActions:actions];
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 150;
 }
 
+- (IBAction)addNoteAction:(UIBarButtonItem *)sender {
+    AddEditNoteViewController *addNoteView = [[self storyboard] instantiateViewControllerWithIdentifier:@"AddEditNoteViewController"];
+    [[self navigationController] pushViewController:addNoteView animated:YES];
+}
 @end

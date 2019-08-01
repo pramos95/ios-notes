@@ -64,7 +64,16 @@ static ModelController *_instance;
     return self.categoriesArray;
 }
 
-+ (NSArray *)Notes:(NSArray *)notes ofCategory:(NoteCategory *)category {
+- (NoteCategory *)categoryWithId:(NSNumber *)categoryId {
+    for (NoteCategory *category in self.categoriesArray) {
+        if ([category.categoryId isEqualToNumber:categoryId]) {
+            return category;
+        }
+    }
+    return nil;
+}
+
++ (NSArray *)notes:(NSArray *)notes ofCategory:(NoteCategory *)category {
     NSMutableArray *res = [NSMutableArray new];
     for (Note *note in notes) {
         if ([note.categoryId isEqualToNumber:category.categoryId]) {
@@ -72,6 +81,18 @@ static ModelController *_instance;
         }
     }
     return res;
+}
+
+- (void)addNote:(Note *)note {
+    [self.notesArray addObject:note];
+    NSNotification *notification = [NSNotification notificationWithName:@"" object:self];
+    [NSNotificationCenter.defaultCenter postNotification:notification];
+}
+
+- (void)editNote:(Note *)current withModifiedNote:(Note *)modifiedNote {
+    [self.notesArray replaceObjectAtIndex:[self.notesArray indexOfObject:current] withObject:modifiedNote];
+    NSNotification *notification = [NSNotification notificationWithName:@"" object:self];
+    [NSNotificationCenter.defaultCenter postNotification:notification];
 }
 
 @end

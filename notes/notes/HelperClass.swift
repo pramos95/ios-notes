@@ -12,7 +12,7 @@ import UIKit
 
     public static var dateFormat = "EEEE, MMM d, yyyy"
     
-    @objc public static func formatDate(date: Date) -> String{
+    @objc public static func formatDate(date: Date) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = dateFormat;
         return dateFormatter.string(from: date)

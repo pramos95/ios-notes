@@ -4,3 +4,5 @@
 
 #import "Note.h"
 #import "NoteCategory.h"
+#import "ModelController.h"
+#import "ViewController.h"

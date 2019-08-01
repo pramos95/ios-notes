@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		EF0663FB22EB46AC003CDDE4 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF0663FA22EB46AC003CDDE4 /* DetailViewController.swift */; };
 		EF08957122F07BA40097B7DA /* HelperClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF08957022F07BA40097B7DA /* HelperClass.swift */; };
+		EF08957322F0AA4B0097B7DA /* AddEditNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF08957222F0AA4B0097B7DA /* AddEditNoteViewController.swift */; };
 		EF097A0D22D37B57002FFB76 /* notes.json in Resources */ = {isa = PBXBuildFile; fileRef = EF097A0C22D37B57002FFB76 /* notes.json */; };
 		EF0EF92422D8BB9900456955 /* CustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EF0EF92222D8BB9900456955 /* CustomCell.m */; };
 		EF0EF92522D8BB9900456955 /* CustomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF0EF92322D8BB9900456955 /* CustomCell.xib */; };
@@ -46,6 +47,7 @@
 		EF0663F522EB2D37003CDDE4 /* notes-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "notes-Bridging-Header.h"; sourceTree = "<group>"; };
 		EF0663FA22EB46AC003CDDE4 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		EF08957022F07BA40097B7DA /* HelperClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperClass.swift; sourceTree = "<group>"; };
+		EF08957222F0AA4B0097B7DA /* AddEditNoteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEditNoteViewController.swift; sourceTree = "<group>"; };
 		EF097A0C22D37B57002FFB76 /* notes.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = notes.json; sourceTree = "<group>"; };
 		EF0EF92122D8BB9900456955 /* CustomCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomCell.h; sourceTree = "<group>"; };
 		EF0EF92222D8BB9900456955 /* CustomCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomCell.m; sourceTree = "<group>"; };
@@ -127,6 +129,7 @@
 				EF122A1E22CB998200A8292D /* AppDelegate.m */,
 				EF122A2022CB998200A8292D /* ViewController.h */,
 				EF122A2122CB998200A8292D /* ViewController.m */,
+				EF08957222F0AA4B0097B7DA /* AddEditNoteViewController.swift */,
 				EF122A2322CB998200A8292D /* Main.storyboard */,
 				EF122A2622CB998300A8292D /* Assets.xcassets */,
 				EF122A2822CB998300A8292D /* LaunchScreen.storyboard */,
@@ -307,6 +310,7 @@
 				EF2B518E22D4D614002DCD83 /* ModelController.m in Sources */,
 				EF2B519922D4D6CA002DCD83 /* Note.m in Sources */,
 				EF122A1F22CB998200A8292D /* AppDelegate.m in Sources */,
+				EF08957322F0AA4B0097B7DA /* AddEditNoteViewController.swift in Sources */,
 				EF0663FB22EB46AC003CDDE4 /* DetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

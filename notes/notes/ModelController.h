@@ -20,9 +20,12 @@ NS_ASSUME_NONNULL_BEGIN
 + (ModelController *)getInstance;
 - (ModelController *)init;
 - (void)loadData:(void (^)(NSError * _Nullable error))completionHandler;
-- (NSArray *)getNotes;
-- (NSArray *)getCategories;
-+ (NSArray *)Notes:(NSArray *)notes ofCategory:(NoteCategory *)category;
+- (NSArray<Note *> *)getNotes;
+- (NSArray<NoteCategory *> *)getCategories;
+- (NoteCategory *)categoryWithId:(NSNumber *)categoryId;
++ (NSArray<Note *> *)notes:(NSArray *)notes ofCategory:(NoteCategory *)category;
+- (void)addNote:(Note *)note;
+- (void)editNote:(Note *)current withModifiedNote:(Note *)modifiedNote;
 
 @end
 
