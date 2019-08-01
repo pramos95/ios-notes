@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EF0663FB22EB46AC003CDDE4 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF0663FA22EB46AC003CDDE4 /* DetailViewController.swift */; };
+		EF08957122F07BA40097B7DA /* HelperClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF08957022F07BA40097B7DA /* HelperClass.swift */; };
 		EF097A0D22D37B57002FFB76 /* notes.json in Resources */ = {isa = PBXBuildFile; fileRef = EF097A0C22D37B57002FFB76 /* notes.json */; };
 		EF0EF92422D8BB9900456955 /* CustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EF0EF92222D8BB9900456955 /* CustomCell.m */; };
 		EF0EF92522D8BB9900456955 /* CustomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF0EF92322D8BB9900456955 /* CustomCell.xib */; };
@@ -19,7 +21,7 @@
 		EF122A3722CB998300A8292D /* notesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF122A3622CB998300A8292D /* notesTests.m */; };
 		EF122A4222CB998300A8292D /* notesUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF122A4122CB998300A8292D /* notesUITests.m */; };
 		EF2B518E22D4D614002DCD83 /* ModelController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2B518D22D4D614002DCD83 /* ModelController.m */; };
-		EF2B519122D4D661002DCD83 /* Category.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2B519022D4D661002DCD83 /* Category.m */; };
+		EF2B519122D4D661002DCD83 /* NoteCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2B519022D4D661002DCD83 /* NoteCategory.m */; };
 		EF2B519922D4D6CA002DCD83 /* Note.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2B519822D4D6CA002DCD83 /* Note.m */; };
 /* End PBXBuildFile section */
 
@@ -41,6 +43,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		EF0663F522EB2D37003CDDE4 /* notes-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "notes-Bridging-Header.h"; sourceTree = "<group>"; };
+		EF0663FA22EB46AC003CDDE4 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		EF08957022F07BA40097B7DA /* HelperClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperClass.swift; sourceTree = "<group>"; };
 		EF097A0C22D37B57002FFB76 /* notes.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = notes.json; sourceTree = "<group>"; };
 		EF0EF92122D8BB9900456955 /* CustomCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomCell.h; sourceTree = "<group>"; };
 		EF0EF92222D8BB9900456955 /* CustomCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomCell.m; sourceTree = "<group>"; };
@@ -63,8 +68,8 @@
 		EF122A4322CB998300A8292D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EF2B518C22D4D614002DCD83 /* ModelController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ModelController.h; sourceTree = "<group>"; };
 		EF2B518D22D4D614002DCD83 /* ModelController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ModelController.m; sourceTree = "<group>"; };
-		EF2B518F22D4D661002DCD83 /* Category.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Category.h; sourceTree = "<group>"; };
-		EF2B519022D4D661002DCD83 /* Category.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Category.m; sourceTree = "<group>"; };
+		EF2B518F22D4D661002DCD83 /* NoteCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NoteCategory.h; sourceTree = "<group>"; };
+		EF2B519022D4D661002DCD83 /* NoteCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NoteCategory.m; sourceTree = "<group>"; };
 		EF2B519722D4D6CA002DCD83 /* Note.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Note.h; sourceTree = "<group>"; };
 		EF2B519822D4D6CA002DCD83 /* Note.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Note.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -129,13 +134,16 @@
 				EF122A2C22CB998300A8292D /* main.m */,
 				EF2B518C22D4D614002DCD83 /* ModelController.h */,
 				EF2B518D22D4D614002DCD83 /* ModelController.m */,
-				EF2B518F22D4D661002DCD83 /* Category.h */,
-				EF2B519022D4D661002DCD83 /* Category.m */,
+				EF2B518F22D4D661002DCD83 /* NoteCategory.h */,
+				EF2B519022D4D661002DCD83 /* NoteCategory.m */,
 				EF2B519722D4D6CA002DCD83 /* Note.h */,
 				EF2B519822D4D6CA002DCD83 /* Note.m */,
 				EF0EF92122D8BB9900456955 /* CustomCell.h */,
 				EF0EF92222D8BB9900456955 /* CustomCell.m */,
 				EF0EF92322D8BB9900456955 /* CustomCell.xib */,
+				EF0663F522EB2D37003CDDE4 /* notes-Bridging-Header.h */,
+				EF0663FA22EB46AC003CDDE4 /* DetailViewController.swift */,
+				EF08957022F07BA40097B7DA /* HelperClass.swift */,
 			);
 			path = notes;
 			sourceTree = "<group>";
@@ -225,6 +233,7 @@
 				TargetAttributes = {
 					EF122A1922CB998200A8292D = {
 						CreatedOnToolsVersion = 10.2.1;
+						LastSwiftMigration = 1030;
 					};
 					EF122A3122CB998300A8292D = {
 						CreatedOnToolsVersion = 10.2.1;
@@ -291,12 +300,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				EF122A2222CB998200A8292D /* ViewController.m in Sources */,
-				EF2B519122D4D661002DCD83 /* Category.m in Sources */,
+				EF2B519122D4D661002DCD83 /* NoteCategory.m in Sources */,
 				EF0EF92422D8BB9900456955 /* CustomCell.m in Sources */,
+				EF08957122F07BA40097B7DA /* HelperClass.swift in Sources */,
 				EF122A2D22CB998300A8292D /* main.m in Sources */,
 				EF2B518E22D4D614002DCD83 /* ModelController.m in Sources */,
 				EF2B519922D4D6CA002DCD83 /* Note.m in Sources */,
 				EF122A1F22CB998200A8292D /* AppDelegate.m in Sources */,
+				EF0663FB22EB46AC003CDDE4 /* DetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -467,7 +478,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
 				INFOPLIST_FILE = notes/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -475,6 +488,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = orangeloops.notes;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "notes/notes-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -483,7 +499,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
 				INFOPLIST_FILE = notes/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -491,6 +509,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = orangeloops.notes;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "notes/notes-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -498,6 +518,7 @@
 		EF122A4A22CB998300A8292D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = notesTests/Info.plist;
@@ -516,6 +537,7 @@
 		EF122A4B22CB998300A8292D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = notesTests/Info.plist;
@@ -534,6 +556,7 @@
 		EF122A4D22CB998300A8292D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = notesUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -551,6 +574,7 @@
 		EF122A4E22CB998300A8292D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = notesUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

@@ -51,7 +51,7 @@ static ModelController *_instance;
     for (NSDictionary *category in categories) {
         NSDate *date = [[NSDate alloc] initWithTimeIntervalSince1970:[category[@"createdDate"] doubleValue]];
         NSNumber *categoryId = [NSNumber numberWithInt:[category[@"id"] intValue]];
-        Category *object = [[Category alloc] initWithId:categoryId title:category[@"title"] createdDate:date];
+        NoteCategory *object = [[NoteCategory alloc] initWithId:categoryId title:category[@"title"] createdDate:date];
         [self.categoriesArray addObject:object];
     }
 }
@@ -64,7 +64,7 @@ static ModelController *_instance;
     return self.categoriesArray;
 }
 
-+ (NSArray *)getNotes:(NSArray *)notes ofCategory:(Category *)category {
++ (NSArray *)Notes:(NSArray *)notes ofCategory:(NoteCategory *)category {
     NSMutableArray *res = [NSMutableArray new];
     for (Note *note in notes) {
         if ([note.categoryId isEqualToNumber:category.categoryId]) {

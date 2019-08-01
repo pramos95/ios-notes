@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "ModelController.h"
 #import "Note.h"
-#import "Category.h"
+#import "NoteCategory.h"
+#import "CustomCell.h"
 
 @interface ViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 

@@ -7,12 +7,12 @@
 //
 
 #import "ViewController.h"
-#import "CustomCell.h"
+#import "notes-Swift.h"
 
 @interface ViewController ()
 
 @property (strong, nonatomic) NSArray<Note *> *notes;
-@property (strong, nonatomic) NSArray<Category *> *categories;
+@property (strong, nonatomic) NSArray<NoteCategory *> *categories;
 @property (strong, nonatomic) NSMutableArray<NSNumber *> *numberOfRowsForSection;
 
 @end
@@ -26,8 +26,7 @@
         if (!error) {
             [self refeshTableView:cont];
         } else {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Download error" message:error.localizedDescription delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-            [alert show];
+            [self showError:error];
         }
     }];
 }
@@ -38,7 +37,7 @@
     self.numberOfRowsForSection = [NSMutableArray new];
     for (int section = 0; section < self.categories.count; section++) {
         NSInteger counter = 0;
-        Category *category = self.categories[section];
+        NoteCategory *category = self.categories[section];
         for (Note *note in self.notes) {
             if ([note.categoryId isEqualToNumber:category.categoryId]) {
                 counter ++;
@@ -67,14 +66,29 @@
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"CustomCell" owner:self options:nil];
         cell = [nib objectAtIndex:0];
     }
-    Category *category = self.categories[indexPath.section];
-    Note *note = [ModelController getNotes:self.notes ofCategory:category][indexPath.row];
+    NoteCategory *category = self.categories[indexPath.section];
+    Note *note = [ModelController Notes:self.notes ofCategory:category][indexPath.row];
     cell.title.text = note.title;
     NSDateFormatter *dateFormatter = [NSDateFormatter new];
     dateFormatter.dateFormat = @"EEEE, MMM d, yyyy";
-    cell.date.text = [dateFormatter stringFromDate:note.contentDate];
+    cell.date.text = [HelperClass formatDateWithDate: note.contentDate];
     cell.content.text = note.content;
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    DetailViewController *detailView = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailView"];
+    detailView.note = [ModelController Notes:self.notes ofCategory:self.categories[indexPath.section]][indexPath.row];
+    detailView.category = self.categories[indexPath.section];
+
+    [self.navigationController pushViewController:detailView animated:YES];
+}
+
+- (void)showError:(NSError *)error {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Download Error" message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *dismissAction = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:nil];
+    [alertController addAction:dismissAction];
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

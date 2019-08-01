@@ -8,21 +8,21 @@
 
 #import <Foundation/Foundation.h>
 #import "Note.h"
-#import "Category.h"
+#import "NoteCategory.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ModelController : NSObject
 
 @property (strong, nonatomic) NSMutableArray<Note *> *notesArray;
-@property (strong, nonatomic) NSMutableArray<Category *> *categoriesArray;
+@property (strong, nonatomic) NSMutableArray<NoteCategory *> *categoriesArray;
 
 + (ModelController *)getInstance;
 - (ModelController *)init;
 - (void)loadData:(void (^)(NSError * _Nullable error))completionHandler;
 - (NSArray *)getNotes;
 - (NSArray *)getCategories;
-+ (NSArray *)getNotes:(NSArray *)notes ofCategory:(Category *)category;
++ (NSArray *)Notes:(NSArray *)notes ofCategory:(NoteCategory *)category;
 
 @end
 

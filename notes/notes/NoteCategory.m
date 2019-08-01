@@ -6,11 +6,11 @@
 //  Copyright © 2019 Pedro Ramos. All rights reserved.
 //
 
-#import "Category.h"
+#import "NoteCategory.h"
 
-@implementation Category
+@implementation NoteCategory
 
-- (Category *)initWithId:(NSNumber *)categoryId title:(NSString *)title createdDate:(NSDate *)createdDate {
+- (NoteCategory *)initWithId:(NSNumber *)categoryId title:(NSString *)title createdDate:(NSDate *)createdDate {
     self = [super init];
     self.categoryId = categoryId;
     self.title = title;
