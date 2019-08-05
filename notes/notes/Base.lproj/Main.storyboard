@@ -82,7 +82,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Done"/>
                                 <connections>
-                                    <action selector="done:" destination="DqN-uq-2PS" eventType="touchUpInside" id="moe-Z1-Nre"/>
+                                    <action selector="readyForUpdateNoteData:" destination="DqN-uq-2PS" eventType="touchUpInside" id="moe-Z1-Nre"/>
                                 </connections>
                             </button>
                         </subviews>

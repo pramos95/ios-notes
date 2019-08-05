@@ -21,11 +21,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    ModelController *cont = [ModelController getInstance];
-    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(reciveRefeshNotification:) name:nil object:cont];
+    ModelController *cont = [ModelController sharedInstance];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(reciveRefeshNotification:) name:@"RefeshTable"  object:cont];
     [cont loadData:^(NSError * _Nullable error){
         if (!error) {
-            [self refeshTableView:cont];
+            [self refeshTableView];
         } else {
             [self showError:error];
         }
@@ -33,11 +33,11 @@
 }
 
 - (void)reciveRefeshNotification:(NSNotification *)notification {
-    ModelController *cont = [ModelController getInstance];
-    [self refeshTableView:cont];
+    [self refeshTableView];
 }
 
-- (void)refeshTableView:(ModelController *)cont {
+- (void)refeshTableView {
+    ModelController *cont = [ModelController sharedInstance];
     self.notes = [cont getNotes];
     self.categories = [cont getCategories];
     self.numberOfRowsForSection = [NSMutableArray new];
@@ -73,7 +73,7 @@
         cell = [nib objectAtIndex:0];
     }
     NoteCategory *category = self.categories[indexPath.section];
-    Note *note = [ModelController notes:self.notes ofCategory:category][indexPath.row];
+    Note *note = [[ModelController sharedInstance] notesOfCategory:category][indexPath.row];
     cell.title.text = note.title;
     cell.date.text = [HelperClass formatDateWithDate: note.contentDate];
     cell.content.text = note.content;
@@ -82,8 +82,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     DetailViewController *detailView = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailView"];
-    detailView.note = [ModelController notes:self.notes ofCategory:self.categories[indexPath.section]][indexPath.row];
-    detailView.category = self.categories[indexPath.section];
+    detailView.note = [[ModelController sharedInstance] notesOfCategory:self.categories[indexPath.section]][indexPath.row];
     [self.navigationController pushViewController:detailView animated:YES];
 }
 
@@ -98,7 +97,7 @@
     UIContextualAction *action = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:@"Edit" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
         AddEditNoteViewController *editView = [self.storyboard instantiateViewControllerWithIdentifier:@"AddEditNoteViewController"];
         NoteCategory *category = self.categories[indexPath.section];
-        editView.note = [ModelController notes:self.notes ofCategory:category][indexPath.row];
+        editView.note = [[ModelController sharedInstance] notesOfCategory:category][indexPath.row];
         [self.navigationController pushViewController:editView animated:YES];
     }];
     NSMutableArray *actions = [NSMutableArray new];

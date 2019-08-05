@@ -17,13 +17,13 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSMutableArray<Note *> *notesArray;
 @property (strong, nonatomic) NSMutableArray<NoteCategory *> *categoriesArray;
 
-+ (ModelController *)getInstance;
-- (ModelController *)init;
++ (ModelController *)sharedInstance;
+- (id)init;
 - (void)loadData:(void (^)(NSError * _Nullable error))completionHandler;
 - (NSArray<Note *> *)getNotes;
 - (NSArray<NoteCategory *> *)getCategories;
 - (NoteCategory *)categoryWithId:(NSNumber *)categoryId;
-+ (NSArray<Note *> *)notes:(NSArray *)notes ofCategory:(NoteCategory *)category;
+- (NSArray<Note *> *)notesOfCategory:(NoteCategory *)category;
 - (void)addNote:(Note *)note;
 - (void)editNote:(Note *)current withModifiedNote:(Note *)modifiedNote;
 

@@ -19,8 +19,7 @@ class AddEditNoteViewController: UIViewController, UIPickerViewDelegate, UIPicke
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let modelController = ModelController.getInstance()
-        categories = modelController.getCategories()
+        categories = ModelController.sharedInstance().getCategories()
         
         guard let note = note else {
             return
@@ -56,11 +55,11 @@ class AddEditNoteViewController: UIViewController, UIPickerViewDelegate, UIPicke
         return cat[row].title
     }
 
-    @IBAction func done(_ sender: UIButton) {
+    @IBAction func readyForUpdateNoteData(_ sender: UIButton) {
         guard let cat = categories else {
             return
         }
-        let cont = ModelController.getInstance()
+        let cont = ModelController.sharedInstance()
         if (noteTitle.text == "") {
             let alert = UIAlertController(title: "Empty note title", message: "Note title cannot be empty", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Discard note", style: .destructive, handler: { (action) in

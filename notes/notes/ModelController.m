@@ -9,15 +9,17 @@
 #import "ModelController.h"
 
 @implementation ModelController
-static ModelController *_instance;
-+ (ModelController *) getInstance {
-    if (_instance == nil) {
-        _instance = [ModelController new];
-    }
-    return _instance;
+
++ (id)sharedInstance {
+    static ModelController *sharedInstance = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedInstance = [[self alloc] init];
+    });
+    return sharedInstance;
 }
 
-- (ModelController *)init {
+- (id)init {
     self = [super init];
     self.notesArray = [NSMutableArray array];
     self.categoriesArray = [NSMutableArray array];
@@ -73,9 +75,9 @@ static ModelController *_instance;
     return nil;
 }
 
-+ (NSArray *)notes:(NSArray *)notes ofCategory:(NoteCategory *)category {
+- (NSArray *)notesOfCategory:(NoteCategory *)category {
     NSMutableArray *res = [NSMutableArray new];
-    for (Note *note in notes) {
+    for (Note *note in self.notesArray) {
         if ([note.categoryId isEqualToNumber:category.categoryId]) {
             [res addObject:note];
         }
@@ -85,13 +87,13 @@ static ModelController *_instance;
 
 - (void)addNote:(Note *)note {
     [self.notesArray addObject:note];
-    NSNotification *notification = [NSNotification notificationWithName:@"" object:self];
+    NSNotification *notification = [NSNotification notificationWithName:@"RefeshTable" object:self];
     [NSNotificationCenter.defaultCenter postNotification:notification];
 }
 
 - (void)editNote:(Note *)current withModifiedNote:(Note *)modifiedNote {
     [self.notesArray replaceObjectAtIndex:[self.notesArray indexOfObject:current] withObject:modifiedNote];
-    NSNotification *notification = [NSNotification notificationWithName:@"" object:self];
+    NSNotification *notification = [NSNotification notificationWithName:@"RefeshTable" object:self];
     [NSNotificationCenter.defaultCenter postNotification:notification];
 }
 

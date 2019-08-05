@@ -23,6 +23,7 @@ import UIKit
         guard let note = note else {
             return
         }
+        category = ModelController.sharedInstance().category(withId: note.categoryId)
         noteTitle.text = note.title
         createdDate.text = HelperClass.formatDate(date: note.contentDate)
         categoryTitle.text = category?.title
