@@ -21,6 +21,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:self.view];
+    hud.label.text = @"Loading...";
+    [self.view addSubview:hud];
+    [hud showAnimated:YES];
     ModelController *cont = [ModelController getInstance];
     [cont loadData:^(NSError * _Nullable error){
         if (!error) {
@@ -28,6 +32,7 @@
         } else {
             [self showError:error];
         }
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
     }];
 }
 

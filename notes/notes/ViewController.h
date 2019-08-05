@@ -11,6 +11,7 @@
 #import "Note.h"
 #import "NoteCategory.h"
 #import "CustomCell.h"
+#import "MBProgressHUD.h"
 
 @interface ViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
