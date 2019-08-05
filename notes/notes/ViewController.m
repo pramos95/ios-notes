@@ -24,6 +24,10 @@ NSString *const detailViewName = @"DetailView";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:self.view];
+    hud.label.text = @"Loading...";
+    [self.view addSubview:hud];
+    [hud showAnimated:YES];
     ModelController *cont = [ModelController sharedInstance];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(reciveRefeshNotification:) name:refeshNotificationName object:cont];
     [cont loadData:^(NSError * _Nullable error){
@@ -32,6 +36,7 @@ NSString *const detailViewName = @"DetailView";
         } else {
             [self showError:error];
         }
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
     }];
 }
 
