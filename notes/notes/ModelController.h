@@ -14,11 +14,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ModelController : NSObject
 
+extern NSString *const refeshNotificationName;
 @property (strong, nonatomic) NSMutableArray<Note *> *notesArray;
 @property (strong, nonatomic) NSMutableArray<NoteCategory *> *categoriesArray;
 
 + (ModelController *)sharedInstance;
-- (id)init;
 - (void)loadData:(void (^)(NSError * _Nullable error))completionHandler;
 - (NSArray<Note *> *)getNotes;
 - (NSArray<NoteCategory *> *)getCategories;

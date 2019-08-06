@@ -9,6 +9,9 @@
 #import "ViewController.h"
 #import "notes-Swift.h"
 
+NSString *const addEditNoteViewName = @"AddEditNoteViewController";
+NSString *const detailViewName = @"DetailView";
+
 @interface ViewController ()
 
 @property (strong, nonatomic) NSArray<Note *> *notes;
@@ -22,7 +25,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     ModelController *cont = [ModelController sharedInstance];
-    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(reciveRefeshNotification:) name:@"RefeshTable"  object:cont];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(reciveRefeshNotification:) name:refeshNotificationName object:cont];
     [cont loadData:^(NSError * _Nullable error){
         if (!error) {
             [self refeshTableView];
@@ -81,7 +84,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    DetailViewController *detailView = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailView"];
+    DetailViewController *detailView = [self.storyboard instantiateViewControllerWithIdentifier:detailViewName];
     detailView.note = [[ModelController sharedInstance] notesOfCategory:self.categories[indexPath.section]][indexPath.row];
     [self.navigationController pushViewController:detailView animated:YES];
 }
@@ -95,7 +98,7 @@
 
 - (nullable UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath{
     UIContextualAction *action = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:@"Edit" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
-        AddEditNoteViewController *editView = [self.storyboard instantiateViewControllerWithIdentifier:@"AddEditNoteViewController"];
+        AddEditNoteViewController *editView = [self.storyboard instantiateViewControllerWithIdentifier:addEditNoteViewName];
         NoteCategory *category = self.categories[indexPath.section];
         editView.note = [[ModelController sharedInstance] notesOfCategory:category][indexPath.row];
         [self.navigationController pushViewController:editView animated:YES];
@@ -110,7 +113,7 @@
 }
 
 - (IBAction)addNoteAction:(UIBarButtonItem *)sender {
-    AddEditNoteViewController *addNoteView = [[self storyboard] instantiateViewControllerWithIdentifier:@"AddEditNoteViewController"];
-    [[self navigationController] pushViewController:addNoteView animated:YES];
+    AddEditNoteViewController *addNoteView = [self.storyboard instantiateViewControllerWithIdentifier:addEditNoteViewName];
+    [self.navigationController pushViewController:addNoteView animated:YES];
 }
 @end

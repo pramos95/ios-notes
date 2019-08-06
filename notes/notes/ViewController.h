@@ -14,6 +14,8 @@
 
 @interface ViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
+extern NSString *const addEditNoteViewName;
+extern NSString *const detailViewName;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addNote;
 

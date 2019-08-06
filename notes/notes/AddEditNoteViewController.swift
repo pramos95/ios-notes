@@ -55,14 +55,14 @@ class AddEditNoteViewController: UIViewController, UIPickerViewDelegate, UIPicke
         return cat[row].title
     }
 
-    @IBAction func readyForUpdateNoteData(_ sender: UIButton) {
+    @IBAction func sendNoteAction(_ sender: UIButton) {
         guard let cat = categories else {
             return
         }
         let cont = ModelController.sharedInstance()
-        if (noteTitle.text == "") {
+        if noteTitle.text == "" {
             let alert = UIAlertController(title: "Empty note title", message: "Note title cannot be empty", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Discard note", style: .destructive, handler: { (action) in
+            alert.addAction(UIAlertAction(title: "Discard note", style: .destructive, handler: { action in
                 self.navigationController?.popViewController(animated: true)
             }))
             alert.addAction(UIAlertAction(title: "Continue editing", style: .default, handler: nil))

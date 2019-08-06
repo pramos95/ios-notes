@@ -10,6 +10,8 @@
 
 @implementation ModelController
 
+NSString *const refeshNotificationName = @"RefeshTable";
+
 + (id)sharedInstance {
     static ModelController *sharedInstance = nil;
     static dispatch_once_t onceToken;
@@ -87,13 +89,13 @@
 
 - (void)addNote:(Note *)note {
     [self.notesArray addObject:note];
-    NSNotification *notification = [NSNotification notificationWithName:@"RefeshTable" object:self];
+    NSNotification *notification = [NSNotification notificationWithName:refeshNotificationName object:self];
     [NSNotificationCenter.defaultCenter postNotification:notification];
 }
 
 - (void)editNote:(Note *)current withModifiedNote:(Note *)modifiedNote {
     [self.notesArray replaceObjectAtIndex:[self.notesArray indexOfObject:current] withObject:modifiedNote];
-    NSNotification *notification = [NSNotification notificationWithName:@"RefeshTable" object:self];
+    NSNotification *notification = [NSNotification notificationWithName:refeshNotificationName object:self];
     [NSNotificationCenter.defaultCenter postNotification:notification];
 }
 
