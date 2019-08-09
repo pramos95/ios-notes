@@ -6,12 +6,7 @@
 //  Copyright © 2019 Pedro Ramos. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import "ModelController.h"
-#import "Note.h"
-#import "NoteCategory.h"
-#import "CustomCell.h"
-#import "MBProgressHUD.h"
+#import <UIKit/UIKit.h>¡
 
 @interface ViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 

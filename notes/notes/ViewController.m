@@ -8,6 +8,11 @@
 
 #import "ViewController.h"
 #import "notes-Swift.h"
+#import "ModelController.h"
+#import "Note.h"
+#import "NoteCategory.h"
+#import "CustomCell.h"
+#import "MBProgressHUD.h"
 
 NSString *const addEditNoteViewName = @"AddEditNoteViewController";
 NSString *const detailViewName = @"DetailView";
