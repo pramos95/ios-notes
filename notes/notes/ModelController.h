@@ -26,6 +26,7 @@ extern NSString *const refeshNotificationName;
 - (NSArray<Note *> *)notesOfCategory:(NoteCategory *)category;
 - (void)addNote:(Note *)note;
 - (void)editNote:(Note *)current withModifiedNote:(Note *)modifiedNote;
+- (void)addCategoryWithTitle:(NSString *)title;
 
 @end
 

@@ -116,4 +116,22 @@ NSString *const detailViewName = @"DetailView";
     AddEditNoteViewController *addNoteView = [self.storyboard instantiateViewControllerWithIdentifier:addEditNoteViewName];
     [self.navigationController pushViewController:addNoteView animated:YES];
 }
+
+- (IBAction)addCategoryAction:(UIBarButtonItem *)sender {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Add Category" message:@"Insert category title" preferredStyle:UIAlertControllerStyleAlert];
+    [alert addTextFieldWithConfigurationHandler:nil];
+    [alert addAction:[UIAlertAction actionWithTitle:@"Done" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        if (alert.textFields[0].text.length == 0) {
+            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(20, 20, 300, 100)];
+            label.text = @"Category title cannot be empty";
+            label.textColor = UIColor.redColor;
+            [alert.view addSubview:label];
+            [self presentViewController:alert animated:YES completion:nil];
+        }else {
+            [[ModelController sharedInstance] addCategoryWithTitle:alert.textFields[0].text];
+        }
+    }]];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
 @end

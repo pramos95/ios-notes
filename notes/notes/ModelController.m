@@ -7,6 +7,11 @@
 //
 
 #import "ModelController.h"
+@interface ModelController ()
+
+@property (strong, nonatomic) NSNumber *nextCategoryId;
+
+@end
 
 @implementation ModelController
 
@@ -25,6 +30,7 @@ NSString *const refeshNotificationName = @"RefeshTable";
     self = [super init];
     self.notesArray = [NSMutableArray array];
     self.categoriesArray = [NSMutableArray array];
+    self.nextCategoryId = [NSNumber numberWithInt:0];
     return self;
 }
 
@@ -55,6 +61,9 @@ NSString *const refeshNotificationName = @"RefeshTable";
     for (NSDictionary *category in categories) {
         NSDate *date = [[NSDate alloc] initWithTimeIntervalSince1970:[category[@"createdDate"] doubleValue]];
         NSNumber *categoryId = [NSNumber numberWithInt:[category[@"id"] intValue]];
+        if (categoryId.intValue >= self.nextCategoryId.intValue) {
+            self.nextCategoryId = [NSNumber numberWithInt:categoryId.intValue + 1];
+        }
         NoteCategory *object = [[NoteCategory alloc] initWithId:categoryId title:category[@"title"] createdDate:date];
         [self.categoriesArray addObject:object];
     }
@@ -97,6 +106,23 @@ NSString *const refeshNotificationName = @"RefeshTable";
     [self.notesArray replaceObjectAtIndex:[self.notesArray indexOfObject:current] withObject:modifiedNote];
     NSNotification *notification = [NSNotification notificationWithName:refeshNotificationName object:self];
     [NSNotificationCenter.defaultCenter postNotification:notification];
+}
+
+- (void)addCategoryWithTitle:(NSString *)title {
+    BOOL categoryExists = false;
+    for (NoteCategory *cat in self.categoriesArray) {
+        if ([cat.title isEqualToString:title]) {
+            categoryExists = YES;
+            break;
+        }
+    }
+    if (!categoryExists) {
+        NoteCategory *cat = [[NoteCategory alloc] initWithId:self.nextCategoryId title:title createdDate:[NSDate date]];
+        [self.categoriesArray addObject:cat];
+        self.nextCategoryId = [NSNumber numberWithInt:self.nextCategoryId.intValue + 1];
+        NSNotification *notification = [NSNotification notificationWithName:refeshNotificationName object:self];
+        [NSNotificationCenter.defaultCenter postNotification:notification];
+    }
 }
 
 @end
